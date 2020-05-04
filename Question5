@@ -7,12 +7,12 @@ for(i = 1; i <= n; i++) {
   int counter = 0;
     for(j = 1; j <= n; j++) {
       if(x[i][j] == 0)
-        counter++;
+        bool = true;
+        break;
     } 
-    //if counter equal number of rows and flag is false,
-    //first all-zero row found
-    if(counter == n && flag == false){
+    //if bool is true, the first all-zero row is found
+    if(bool){
       System.out.println("First all-zero row is:" + i);
-      flag = true;
+      break;
     }
 }
