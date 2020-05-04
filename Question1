@@ -1,0 +1,9 @@
+/* Code for state diagram in GoLang */
+
+float_lit =  [ "+" | "-" ] {unicode_digit} "." {unicode_digit} .
+int_lit  = [ "+" | "-" ] {unicode_digit}.
+string_lit = {letter}.
+variable_name = unicode_letter { letter | unicode_digit }.
+letter        = unicode_letter | "_" .
+/* unicode_letter =  a Unicode code point classified as "Letter" */ .
+/* unicode_digit  =  a Unicode code point classified as "Number, decimal digit" */ .
