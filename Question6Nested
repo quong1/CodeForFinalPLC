@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class max_mid_min {
+
+public static void main(String[] args) {
+	int x, y, z;
+  	int min, mid, max,;
+  
+	Scanner sc=new Scanner(System.in);
+	System.out.print("Enter three numbers: ");
+	int x=sc.nextInt();
+	int y=sc.nextInt();
+	int z=sc.nextInt();
+		
+		// from low to high 
+		if(z<y && z<x) {
+			if(y<x) { //(z, y, x)
+        min=z;
+        mid=y;
+        max=x;
+		}
+		
+		  else { //(z, x, y) 
+        min=z;
+        mid=x;
+        max=y;
+
+		}
+   }
+		
+		else if (y<z && y<x) { 
+			if(z<x) { //(y, z, x)
+			min=y;
+      mid=z;
+      max=x;
+
+	}
+			else {
+			min=y;
+      mid=x;
+      max=z;
+	  }
+	}
+		else if (x<y && x<z) { 
+			if (y<z) { //(x, y, z)
+			min=x;
+      mid=y;
+      max=z;
+		}
+			else { //(x, z, y)
+			min=x;
+      mid=z;
+      max=y;
+		}
+    f
+		System.out.println("Max is "+ max);
+		System.out.println("Mid is "+ mid);
+		System.out.println("Min is "+ min);
+
+		}
+		  
+		
+}
+	}
