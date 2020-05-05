@@ -1,12 +1,71 @@
-void expr() {
-printf("Enter <expr>\n");
-term();
-while (nextToken == ADD_OP || nextToken == SUB_OP) {
-lex();
-term();
+public class RecursiveDescentParser {
+private Lexer lexer;
+  private int comp_op;
+  private BooleanExpression root;
+  private final True t = new True();
+  private final False f = new False();
+  public RecursiveDescentParser(Lexer lexer) {
+    this.lexer = lexer;
+  }
+  public BooleanExpression build() {
+    Boolean_expression();
+    return root;
+  }
+  private void Boolean_expression() {
+    Boolean_term();
+    while (comp_op == Lexer.ADD || comp_op == Lexer.SUB) {
+      if(comp_op == Lexer.ADD)
+        ADD add = new ADD();
+        add.setLeft(root);
+        Boolean_term();
+        add.setRight(root);
+        root = add
+     else
+        SUB sub = new SUB();
+        sub.setLeft(root);
+        Boolean_term();
+        sub.setRight(root);
+        root = sub;
+    }
+  }
+  private void Boolean_term() {
+    Boolean_factor();
+    while (comp_op == Lexer.MULT || comp_op == Lexer.DIV) {
+      if(comp_op == Lexer.MULT)
+          ADD add = new ADD();
+          add.setLeft(root);
+          Boolean_term();
+          add.setRight(root);
+          root = add
+       else
+          SUB sub = new SUB();
+          sub.setLeft(root);
+          Boolean_term();
+          sub.setRight(root);
+          root = sub;
+    }
+  }
+   private void Boolean_factor() {
+    comp_op = lexer.nextSymbol();
+    if (comp_op == Lexer.TRUE) {
+      root = t;
+      comp_op = lexer.nextSymbol();
+    } else if (comp_op == Lexer.FALSE) {
+      root = f;
+      comp_op = lexer.nextSymbol();
+    } else if (comp_op == Lexer.NOT) {
+      Not not = new Not();
+      Boolean_factor();
+      not.setChild(root);
+      root = not;
+    } else if (symbol == Lexer.LEFT) {
+      Boolean_expression();
+      comp_op = lexer.nextSymbol(); 
+    } else {
+      throw new RuntimeException("Error");
+    }
+  }
 }
-printf("Exit <expr>\n");
-} 
 
 void term() {
 printf("Enter <term>\n");
@@ -17,7 +76,8 @@ factor();
 }
 printf("Exit <term>\n");
 
-void factor() {
+private void Boolean_factor(){
+comp_op = lexer.nextSymbol();
 printf("Enter <factor>\n");
 if (nextToken == IDENT || nextToken == INT_LIT)
 lex();
