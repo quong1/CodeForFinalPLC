@@ -1,0 +1,54 @@
+public class RecursiveDescentParser {
+  private Lexer lexer;
+  private int comp_op;
+  private BooleanExpression root;
+  private final True t = new True();
+  private final False f = new False();
+  public RecursiveDescentParser(Lexer lexer) {
+    this.lexer = lexer;
+  }
+  public BooleanExpression build() {
+    Boolean_expression();
+    return root;
+  }
+  private void Boolean_expression() {
+    Boolean_term();
+    while (comp_op == Lexer.OR) {
+      Or or = new Or();
+      or.setLeft(root);
+      Boolean_term();
+      or.setRight(root);
+      root = or;
+    }
+  }
+  private void Boolean_term() {
+    Boolean_factor();
+    while (comp_op == Lexer.AND) {
+      And and = new And();
+      and.setLeft(root);
+      Boolean_factor();
+      and.setRight(root);
+      root = and;
+    }
+  }
+  private void Boolean_factor() {
+    comp_op = lexer.nextSymbol();
+    if (comp_op == Lexer.TRUE) {
+      root = t;
+      comp_op = lexer.nextSymbol();
+    } else if (comp_op == Lexer.FALSE) {
+      root = f;
+      comp_op = lexer.nextSymbol();
+    } else if (comp_op == Lexer.NOT) {
+      Not not = new Not();
+      Boolean_factor();
+      not.setChild(root);
+      root = not;
+    } else if (symbol == Lexer.LEFT) {
+      Boolean_expression();
+      comp_op = lexer.nextSymbol(); 
+    } else {
+      throw new RuntimeException("Error");
+    }
+  }
+}
